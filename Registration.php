@@ -9,11 +9,10 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
-<div>
-    <?php
+<?php
+include 'Navbar.php'
+?>
 
-    ?>
-</div>
 
 <div>
     <form action="Registration.php" method="post">

@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-    include 'Navbar.html'
+include 'Navbar.php'
 ?>
 
 </body>
