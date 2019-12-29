@@ -1,11 +1,11 @@
 <?php
-    require_once('config.php');
+require_once('config.php');
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <title>User Update</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
@@ -13,37 +13,44 @@
 include 'Navbar.php'
 ?>
 
+<?php
+$username = "dsoumis";
+$sql = "SELECT * FROM users WHERE username=?";
+$query = $db->prepare($sql);
+$query->execute([$username]);
+$user = $query->fetch();
+?>
 
 <div>
-    <form action="Registration.php" method="post">
+    <form action="UpdateProfile.php" method="post">
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
-                    <h1>Εγγραφή Χρήστη</h1>
-                    <p>Παρακαλώ συμπληρώστε την παρακάτω φόρμα</p>
+                    <h1>Επεξεργασία Προφίλ</h1>
+                    <p>Τροποποιήστε τα στοιχεία σας.</p>
                     <hr class="mb-3">
                     <label for="firstname"><b>Όνομα</b></label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" required>
+                    <input type="text" class="form-control" name="firstname" id="firstname" value=<?php echo $user['first_name'] ?> required>
 
                     <label for="lastname"><b>Επώνυμο</b></label>
-                    <input type="text" class="form-control" name="lastname" id="lastname" required>
+                    <input type="text" class="form-control" name="lastname" id="lastname" value=<?php echo $user['surname'] ?> required>
 
                     <label for="email"><b>Email</b></label>
-                    <input type="email" class="form-control" name="email" id="email" required>
+                    <input type="email" class="form-control" name="email" id="email" value=<?php echo $user['email'] ?> required>
 
                     <label for="phone"><b>Τηλέφωνο</b></label>
-                    <input type="text" class="form-control" name="phone" id="phone" required>
+                    <input type="text" class="form-control" name="phone" id="phone" value=<?php echo $user['telephone'] ?> required>
 
                     <label for="username"><b>Όνομα Χρήστη</b></label>
-                    <input type="text" class="form-control" name="username" id="username" required>
+                    <input type="text" class="form-control" name="username" id="username" value=<?php echo $user['username'] ?> required>
 
                     <label for="password"><b>Κωδικός Χρήστη</b></label>
-                    <input type="password" class="form-control" name="password" id="password" required>
+                    <input type="password" class="form-control" name="password" id="password" value=<?php echo $user['password'] ?> required>
 
                     <label for="repassword"><b>Επαλήθευση Κωδικού Χρήστη</b></label>
-                    <input type="password" class="form-control" name="repassword" id="repassword" required>
+                    <input type="password" class="form-control" name="repassword" id="repassword" value=<?php echo $user['password'] ?> required>
                     <hr class="mb-3">
-                    <input class="btn btn-primary" type="submit" name="create" id="register" value="Εγγραφή">
+                    <input class="btn btn-primary" type="submit" name="create" id="update" value="Τροποποίηση">
                 </div>
             </div>
         </div>
@@ -54,11 +61,8 @@ include 'Navbar.php'
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
     $(function () {
-        $('#register').click(function (e) {
-
-
-
-
+        const prev_username = $('#username').val();
+        $('#update').click(function (e) {
             const valid = this.form.checkValidity();
             if(valid){
                 e.preventDefault();
@@ -79,14 +83,15 @@ include 'Navbar.php'
 
                     $.ajax({
                         type: 'POST',
-                        url: 'register_process.php',
+                        url: 'update_profile_process.php',
                         data: {
                             firstname: firstName,
                             lastname: lastname,
                             email: email,
                             phone: phone,
                             username: username,
-                            password: password
+                            password: password,
+                            prev_username: prev_username
                         },
                         success: async function (data) {
                             if(data === 'ok')
@@ -107,7 +112,7 @@ include 'Navbar.php'
                         error: function (data) {
                             Swal.fire({
                                 title: 'ΣΦΑΛΜΑ',
-                                text: 'Η εγγραφή σας δεν ολοκληρώθηκε. Παρακαλώ προσπαθήστε αργότερα.',
+                                text: 'Η τροποποίησή σας δεν ολοκληρώθηκε. Παρακαλώ προσπαθήστε αργότερα.',
                                 icon: 'error'
                             })
                         },
@@ -118,11 +123,10 @@ include 'Navbar.php'
                     text: 'Παρακαλώ συμπληρώστε όλα τα στοιχεία της φόρμας.'
                 });
             }
-
-
         });
     });
 </script>
 </body>
 </html>
+
 
