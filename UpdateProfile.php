@@ -1,8 +1,6 @@
-<?php
-require_once('config.php');
-?>
-
 <!DOCTYPE html>
+
+
 <html>
 <head>
     <title>User Update</title>
@@ -10,17 +8,20 @@ require_once('config.php');
 </head>
 <body>
 <?php
-include 'Navbar.php'
+include 'Navbar.php';
+require_once('config.php');
+$username="";
+$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>"","repassword"=>"",];
+if(isset($_SESSION['login'])){
+  if($_SESSION['login']==True){
+    $username=$_SESSION['username'];
+    $sql = "SELECT * FROM users WHERE username=?";
+    $query = $db->prepare($sql);
+    $query->execute([$username]);
+    $user = $query->fetch();
+  }
+}
 ?>
-
-<?php
-$username = "dsoumis";
-$sql = "SELECT * FROM users WHERE username=?";
-$query = $db->prepare($sql);
-$query->execute([$username]);
-$user = $query->fetch();
-?>
-
 <div>
     <form>
         <div class="container">
@@ -60,6 +61,10 @@ $user = $query->fetch();
 <script src="js/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
+  const str1="<?php echo $username?>";
+  if(str1==="") window.location="./";
+</script>
+<script type="text/javascript">
     $(function () {
         const prev_username = $('#username').val();
         $('#update').click(function (e) {
@@ -91,7 +96,8 @@ $user = $query->fetch();
                             phone: phone,
                             username: username,
                             password: password,
-                            prev_username: prev_username
+                            prev_username: prev_username,
+                            update:true
                         },
                         success: async function (data) {
                             if(data === 'ok')
