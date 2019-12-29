@@ -2,7 +2,11 @@
     require_once('config.php');
 ?>
 <?php
-    if(isset($_POST)) {
+
+    $previous="index.php";
+    if(isset($_POST["register"])) {
+        session_start();
+
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
@@ -15,8 +19,10 @@
         $query->execute([$username]);
         $count=$query->rowCount();
 
-        if($count>1){
+
+        if($count>0){
             echo "Το όνομα χρήστη που δώσατε υπάρχει ήδη.";
+            session_destroy();
             exit();
         }
 
@@ -25,8 +31,10 @@
         $query->execute([$email]);
         $count=$query->rowCount();
 
-        if($count>1){
+
+        if($count>0){
             echo "Το email που δώσατε υπάρχει ήδη.";
+            session_destroy();
             exit();
         }
 
@@ -37,11 +45,18 @@
         $result = $statementInsert->execute([$username, $password, $email, $firstname, $lastname, $phone]);
 
         if ($result) {
+            $_SESSION['login']=True;
+            $_SESSION['username']=$username;
             echo "ok";
         } else {
+            session_destroy();
+
             echo "Η εγγραφή δεν ολοκληρώθηκε. Παρακαλώ προσπαθήστε αργότερα.";
         }
 
     }else{
         echo "No data.";
+
+        header("Location: ./");
     }
+

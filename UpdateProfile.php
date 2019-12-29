@@ -22,7 +22,8 @@ $user = $query->fetch();
 ?>
 
 <div>
-    <form action="UpdateProfile.php" method="post">
+
+    <form>
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
@@ -128,5 +129,3 @@ $user = $query->fetch();
 </script>
 </body>
 </html>
-
-
