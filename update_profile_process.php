@@ -2,7 +2,9 @@
 require_once('config.php');
 ?>
 <?php
+
 if(isset($_POST['update'])) {
+
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
@@ -24,5 +26,7 @@ if(isset($_POST['update'])) {
 
 }else{
     echo "No data.";
+
     header("Location: ./");
+
 }

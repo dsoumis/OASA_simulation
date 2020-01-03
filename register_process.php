@@ -4,6 +4,7 @@
 <?php
     if(isset($_POST["register"])) {
         session_start();
+
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
@@ -16,6 +17,7 @@
         $query->execute([$username]);
         $count=$query->rowCount();
 
+
         if($count>0){
             echo "Το όνομα χρήστη που δώσατε υπάρχει ήδη.";
             session_destroy();
@@ -26,6 +28,7 @@
         $query = $db->prepare($sql);
         $query->execute([$email]);
         $count=$query->rowCount();
+
 
         if($count>0){
             echo "Το email που δώσατε υπάρχει ήδη.";
@@ -45,10 +48,13 @@
             echo "ok";
         } else {
             session_destroy();
+
             echo "Η εγγραφή δεν ολοκληρώθηκε. Παρακαλώ προσπαθήστε αργότερα.";
         }
 
     }else{
         echo "No data.";
+
         header("Location: ./");
     }
+
