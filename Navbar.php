@@ -142,7 +142,7 @@ if(isset($_SESSION['login'])){
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
 function searchR() {
   var value = $('#value').val();
   if(value.endsWith("(Α)")){

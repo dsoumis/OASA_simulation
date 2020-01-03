@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/routes.css">
 </head>
-<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+<body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
   background-size: cover;background-attachment: fixed;background-size: cover;" onload="initialize()">
   <?php
       include 'Navbar.php'
@@ -56,14 +56,13 @@
           </div>
       </div>
   </div>
-<script>
+<script type="text/javascript">
 function infoOpen(e){
     e.preventDefault();
     const url=decodeURIComponent(window.location.href);
-    const n2=url.lastIndexOf("?");
     const n3=url.lastIndexOf("=")+1;
     const str2=url.substring(n3);
-    console.log(e.target);
+    var type;
     if(str2==="ΣΤΑΣΗ") {
       document.getElementById('title').innerHTML=("Αλληλουχία στάσεων για το λεωφορείο : "+e.target.name);
       type="ΛΕΩΦΟΡΕΙΟ";
@@ -91,15 +90,15 @@ function infoOpen(e){
           t.appendChild(a);
           for(i=0; i<data.length; i++) {
             const b=document.createElement("a");
-
+            var textnode;
             b.setAttribute("class","list-group-item list-group-item-action list-group-item-info");
             if(data[i]["amea"]==="1") {
               textnode=document.createTextNode(data[i][0]+"(Α)");
-              b.setAttribute("href","/routes.php?search="+data[i][0]+"(Α)?type="+str2);
+              b.setAttribute("href","./routes.php?search="+data[i][0]+"(Α)?type="+str2);
             }
             else {
               textnode=document.createTextNode(data[i][0]);
-              b.setAttribute("href","/routes.php?search="+data[i][0]+"?type="+str2);
+              b.setAttribute("href","./routes.php?search="+data[i][0]+"?type="+str2);
             }
             b.appendChild(textnode);
             a.appendChild(b);
@@ -304,8 +303,5 @@ function searchS() {
   });
 }
 </script>
-
-<script src="js/jquery-3.4.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </body>
 </html>

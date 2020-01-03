@@ -6,13 +6,13 @@
     <title>User Update</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+<body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
   background-size: cover;background-attachment: fixed;background-size: cover;">
 <?php
 include 'Navbar.php';
 require_once('config.php');
 $username="";
-$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>"","repassword"=>"",];
+$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>""];
 if(isset($_SESSION['login'])){
   if($_SESSION['login']==True){
     $username=$_SESSION['username'];
@@ -58,9 +58,6 @@ if(isset($_SESSION['login'])){
         </div>
     </form>
 </div>
-
-<script src="js/jquery-3.4.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
 
   const str1="<?php echo $username?>";
