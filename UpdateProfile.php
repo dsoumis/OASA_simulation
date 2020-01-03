@@ -1,8 +1,6 @@
-<?php
-require_once('config.php');
-?>
-
 <!DOCTYPE html>
+
+
 <html>
 <head>
     <title>User Update</title>
@@ -10,19 +8,21 @@ require_once('config.php');
 </head>
 <body>
 <?php
-include 'Navbar.php'
+include 'Navbar.php';
+require_once('config.php');
+$username = "";
+$user = ["first_name" => "", "email" => "", "username" => "", "surname" => "", "telephone" => "", "password" => "", "repassword" => "",];
+if (isset($_SESSION['login'])) {
+    if ($_SESSION['login'] == True) {
+        $username = $_SESSION['username'];
+        $sql = "SELECT * FROM users WHERE username=?";
+        $query = $db->prepare($sql);
+        $query->execute([$username]);
+        $user = $query->fetch();
+    }
+}
 ?>
-
-<?php
-$username = "dsoumis";
-$sql = "SELECT * FROM users WHERE username=?";
-$query = $db->prepare($sql);
-$query->execute([$username]);
-$user = $query->fetch();
-?>
-
 <div>
-
     <form>
         <div class="container">
             <div class="row">
@@ -61,13 +61,16 @@ $user = $query->fetch();
 <script src="js/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
+    const str1 = "<?php echo $username?>";
+    if (str1 === "") window.location = "./";
+</script>
+<script type="text/javascript">
     $(function () {
         const prev_username = $('#username').val();
         $('#update').click(function (e) {
             const valid = this.form.checkValidity();
-            if(valid){
+            if (valid) {
                 e.preventDefault();
-
                 const firstName = $('#firstname').val();
                 const lastname = $('#lastname').val();
                 const email = $('#email').val();
@@ -75,13 +78,11 @@ $user = $query->fetch();
                 const username = $('#username').val();
                 const password = $('#password').val();
                 const repassword = $('#repassword').val();
-
                 if(password!==repassword)
                     Swal.fire({
                         text: 'Ο κωδικός χρήστη δεν είναι ίδιος με τον κωδικό επαλήθευσης.'
                     });
                 else {
-
                     $.ajax({
                         type: 'POST',
                         url: 'update_profile_process.php',
@@ -92,15 +93,16 @@ $user = $query->fetch();
                             phone: phone,
                             username: username,
                             password: password,
-                            prev_username: prev_username
+                            prev_username: prev_username,
+                            update: true
                         },
                         success: async function (data) {
-                            if(data === 'ok')
+                            if (data === 'ok')
                                 Swal.fire({
                                     title: 'ΕΠΙΤΥΧΙΑ',
                                     text: 'Η εγγραφή σας ολοκληρώθηκε.',
                                     icon: 'success'
-                                }).then(function() {
+                                }).then(function () {
                                     window.location = "index.php";
                                 });
                             else if (data !== 'ok')

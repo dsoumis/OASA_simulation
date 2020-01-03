@@ -23,13 +23,14 @@ if(isset($_SESSION['login'])){
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     Εισιτήρια
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownT">
-                    <a class="dropdown-item" href="#">Αγορά</a>
+                    <a class="dropdown-item" href="BuyCard.php">Έκδοση/Φόρτιση Προσωποποιημένης κάρτας</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Τροποποίηση Αγοράς</a>
+                    <a class="dropdown-item" href="BuyTickets.php">Αγορά/Φόρτιση Εισιτηρίων</a>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Διαδρομές</a></li>
@@ -42,22 +43,25 @@ if(isset($_SESSION['login'])){
         </ul>
         <form class="form-inline my-2 my-lg-0 navbar-nav mr-auto">
             <input class="form-control mr-sm-2" type="search" placeholder="Αναζήτηση" aria-label="Αναζήτηση">
-            <button class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo" style="width:18px;"></button>
+            <button class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo"
+                                                             style="width:18px;"></button>
         </form>
 
         <ul class="navbar-nav navbar-right">
-          <li class="nav-item dropdown" id="signedIn" style="display:none">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownU" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php echo "$showUsername" ?> </p>
+            <li class="nav-item dropdown" id="signedIn" style="display:none">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownU" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <p> <?php echo "$showUsername" ?> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownU">
-                  <a class="dropdown-item" href="UpdateProfile.php" >Προβολή Προφίλ</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item"  id="signOut">Αποσύνδεση</a>
+                    <a class="dropdown-item" href="UpdateProfile.php">Προβολή Προφίλ</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="signOut">Αποσύνδεση</a>
                 </div>
             </li>
             <li id="signUp" class="nav-item">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerModal">Εγγραφή</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerModal">Εγγραφή
+                </button>
             </li>
             <li id="login" class="nav-item">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Σύνδεση</button>
@@ -146,26 +150,27 @@ if(isset($_SESSION['login'])){
                         type: 'POST',
                         url: 'signOut.php',
                         data: {
-                            logout:true
+                            logout: true
                         },
                         success: async function (data) {
-                          if(data === 'ok')
-                              Swal.fire({
-                                  title: 'ΕΠΙΤΥΧΙΑ',
-                                  text: 'Αποσυνδεθήκατε επιτυχώς!',
-                                  icon: 'success'
-                              }).then(function() {
-                                  if(document.URL="localhost/UpdateProfile.php") window.location="./";
-                                  else {
-                                    document.getElementById("navbarDropdownU").innerHTML="";
-                                    document.getElementById("login").style.display = "block";
-                                    document.getElementById("signUp").style.display = "block";
-                                    document.getElementById("signedIn").style.display = "none";
-                                  }
-                              });
-                          else if (data !== 'ok')
-                            Swal.fire({
-                                title: 'ΣΦΑΛΜΑ',
+                            if (data === 'ok')
+                                Swal.fire({
+                                    title: 'ΕΠΙΤΥΧΙΑ',
+                                    text: 'Αποσυνδεθήκατε επιτυχώς!',
+                                    icon: 'success'
+                                }).then(function () {
+                                    const str = window.location.pathname;
+                                    if (str.endsWith("UpdateProfile.php")) window.location = "./";
+                                    else {
+                                        document.getElementById("navbarDropdownU").innerHTML = "";
+                                        document.getElementById("login").style.display = "block";
+                                        document.getElementById("signUp").style.display = "block";
+                                        document.getElementById("signedIn").style.display = "none";
+                                    }
+                                });
+                            else if (data !== 'ok')
+                                Swal.fire({
+                                    title: 'ΣΦΑΛΜΑ',
                                 text: data,
                                 icon: 'error'
                           });
@@ -262,16 +267,16 @@ if(isset($_SESSION['login'])){
                             phone: phone,
                             username: username,
                             password: password,
-                            update:true
+                            register: true
                         },
                         success: async function (data) {
-                            if(data === 'ok')
+                            if (data === 'ok')
                                 Swal.fire({
                                     title: 'ΕΠΙΤΥΧΙΑ',
                                     text: 'Η εγγραφή σας ολοκληρώθηκε.',
                                     icon: 'success'
-                                }).then(function() {
-                                    document.getElementById("navbarDropdownU").innerHTML=username;
+                                }).then(function () {
+                                    document.getElementById("navbarDropdownU").innerHTML = username;
                                     document.getElementById("login").style.display = "none";
                                     document.getElementById("signUp").style.display = "none";
                                     document.getElementById("signedIn").style.display = "block";
@@ -280,7 +285,7 @@ if(isset($_SESSION['login'])){
                             else if (data !== 'ok')
                                 Swal.fire({
                                     title: 'ΣΦΑΛΜΑ',
-                                    text: data,
+                                    text: data, //edw eixa data
                                     icon: 'error'
                                 });
                         },
@@ -293,7 +298,7 @@ if(isset($_SESSION['login'])){
                         },
                     });
                 }
-            }else{
+            } else {
                 Swal.fire({
                     text: 'Παρακαλώ συμπληρώστε όλα τα στοιχεία της φόρμας.'
                 });
@@ -302,11 +307,11 @@ if(isset($_SESSION['login'])){
     });
 </script>
 <script type="text/javascript">
-    var str="<?php echo $showUsername ?>";
-    if(str!="") {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("signUp").style.display = "none";
-      document.getElementById("signedIn").style.display = "block";
+    const str = "<?php echo $showUsername ?>"; //allagh
+    if (str !== "") { //allagh
+        document.getElementById("login").style.display = "none";
+        document.getElementById("signUp").style.display = "none";
+        document.getElementById("signedIn").style.display = "block";
     }
 </script>
 

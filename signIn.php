@@ -35,11 +35,10 @@ if(isset($_POST['login'])){
   }
   else {
     session_destroy();
-    echo "Το όνομα/email χρήστη που δώσατε δεν υπάρχει!";
+    echo "Το όνομα χρήστη που δώσατε δεν υπάρχει!";
   }
 }
 else{
   echo "No data.";
   header("Location: ./");
 }
-?>
