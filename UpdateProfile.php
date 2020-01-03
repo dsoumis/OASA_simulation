@@ -6,13 +6,13 @@
     <title>User Update</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+<body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
   background-size: cover;background-attachment: fixed;background-size: cover;">
 <?php
 include 'Navbar.php';
 require_once('config.php');
 $username="";
-$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>"","repassword"=>"",];
+$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>""];
 if(isset($_SESSION['login'])){
   if($_SESSION['login']==True){
     $username=$_SESSION['username'];
@@ -58,21 +58,19 @@ if(isset($_SESSION['login'])){
         </div>
     </form>
 </div>
-
-<script src="js/jquery-3.4.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
+
   const str1="<?php echo $username?>";
   if(str1==="") window.location="./";
+
 </script>
 <script type="text/javascript">
     $(function () {
         const prev_username = $('#username').val();
         $('#update').click(function (e) {
             const valid = this.form.checkValidity();
-            if(valid){
+            if (valid) {
                 e.preventDefault();
-
                 const firstName = $('#firstname').val();
                 const lastname = $('#lastname').val();
                 const email = $('#email').val();
@@ -80,13 +78,11 @@ if(isset($_SESSION['login'])){
                 const username = $('#username').val();
                 const password = $('#password').val();
                 const repassword = $('#repassword').val();
-
                 if(password!==repassword)
                     Swal.fire({
                         text: 'Ο κωδικός χρήστη δεν είναι ίδιος με τον κωδικό επαλήθευσης.'
                     });
                 else {
-
                     $.ajax({
                         type: 'POST',
                         url: 'update_profile_process.php',
@@ -101,12 +97,12 @@ if(isset($_SESSION['login'])){
                             update:true
                         },
                         success: async function (data) {
-                            if(data === 'ok')
+                            if (data === 'ok')
                                 Swal.fire({
                                     title: 'ΕΠΙΤΥΧΙΑ',
                                     text: 'Η εγγραφή σας ολοκληρώθηκε.',
                                     icon: 'success'
-                                }).then(function() {
+                                }).then(function () {
                                     window.location = "index.php";
                                 });
                             else if (data !== 'ok')

@@ -23,13 +23,14 @@ if(isset($_SESSION['login'])){
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     Εισιτήρια
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownT">
-                    <a class="dropdown-item" href="#">Αγορά</a>
+                    <a class="dropdown-item" href="BuyCard.php">Έκδοση/Φόρτιση Προσωποποιημένης κάρτας</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Τροποποίηση Αγοράς</a>
+                    <a class="dropdown-item" href="BuyTickets.php">Αγορά/Φόρτιση Εισιτηρίων</a>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Διαδρομές</a></li>
@@ -141,7 +142,7 @@ if(isset($_SESSION['login'])){
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
 function searchR() {
   var value = $('#value').val();
   if(value.endsWith("(Α)")){
