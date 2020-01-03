@@ -23,45 +23,43 @@ if(isset($_SESSION['login'])){
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownT" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Εισιτήρια
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownT">
-                    <a class="dropdown-item" href="BuyCard.php">Έκδοση/Φόρτιση Προσωποποιημένης κάρτας</a>
+                    <a class="dropdown-item" href="#">Αγορά</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="BuyTickets.php">Αγορά/Φόρτιση Εισιτηρίων</a>
+                    <a class="dropdown-item" href="#">Τροποποίηση Αγοράς</a>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Διαδρομές</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Δρομολόγια</a></li>
+            <li class="nav-item"><a class="nav-link" href="./routes.php">Δρομολόγια</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Εργασία</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Παράπονα</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Α.Μ.Ε.Α</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Επικοινωνία</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Βοήθεια</a></li>
         </ul>
-        <form class="form-inline my-2 my-lg-0 navbar-nav mr-auto">
-            <input class="form-control mr-sm-2" type="search" placeholder="Αναζήτηση" aria-label="Αναζήτηση">
-            <button class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo"
-                                                             style="width:18px;"></button>
+        <form  class="form-inline my-2 my-lg-0 navbar-nav mr-auto" autocomplete="off" method="post">
+            <input onkeyup="searchR()" list="results" class="form-control mr-sm-2" name="value" type="text" id="value" placeholder="Αναζήτηση" aria-label="Αναζήτηση">
+            <button id="search" class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo" style="width:18px;"></button>
+            <datalist id="results">
+            </datalist>
         </form>
 
         <ul class="navbar-nav navbar-right">
-            <li class="nav-item dropdown" id="signedIn" style="display:none">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownU" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <p> <?php echo "$showUsername" ?> </p>
+          <li class="nav-item dropdown" id="signedIn" style="display:none">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownU" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <p>  <?php echo "$showUsername" ?> </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownU">
-                    <a class="dropdown-item" href="UpdateProfile.php">Προβολή Προφίλ</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" id="signOut">Αποσύνδεση</a>
+                  <a class="dropdown-item" href="UpdateProfile.php" >Προβολή Προφίλ</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item"  id="signOut">Αποσύνδεση</a>
                 </div>
             </li>
             <li id="signUp" class="nav-item">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerModal">Εγγραφή
-                </button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerModal">Εγγραφή</button>
             </li>
             <li id="login" class="nav-item">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Σύνδεση</button>
@@ -143,6 +141,57 @@ if(isset($_SESSION['login'])){
         </div>
     </div>
 </div>
+<script>
+function searchR() {
+  var value = $('#value').val();
+  if(value.endsWith("(Α)")){
+    const n=value.lastIndexOf("(Α)");
+    value=value.slice(0,n);
+  }
+  $.ajax({
+      type: 'POST',
+      url: 'search.php',
+      data: {
+          value:value,
+          searchR:true
+      },
+      success: async function (data) {
+        data=JSON.parse(data);
+        const t = document.getElementById('results');
+        while (t.firstChild) {
+            t.removeChild(t.firstChild);
+        }
+        for(i=0; i<data.length; i++) {
+          const a=document.createElement("option");
+          a.setAttribute("id",i);
+          if(data[i]["amea"]==="1") a.setAttribute("value",data[i][0]+"(Α)");
+          else a.setAttribute("value",data[i][0]);
+          if(data[i]["bus_id"]===undefined) a.setAttribute("name","ΣΤΑΣΗ");
+          else a.setAttribute("name","ΛΕΩΦΟΡΕΙΟ");
+          t.appendChild(a);
+        }
+      },
+      error: function (data) {
+          Swal.fire({
+              title: 'ΣΦΑΛΜΑ',
+              text: data,
+              icon: 'error'
+          })
+      },
+  });
+}
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#search').click(function (e) {
+              e.preventDefault();
+              const value = $('#value').val();
+              const name = $("#0").attr("name");
+
+              window.location="./routes.php?search="+value+"?type="+name;
+        });
+    });
+</script>
 <script type="text/javascript">
     $(function () {
         $('#signOut').click(function (e) {
@@ -150,27 +199,27 @@ if(isset($_SESSION['login'])){
                         type: 'POST',
                         url: 'signOut.php',
                         data: {
-                            logout: true
+                            logout:true
                         },
                         success: async function (data) {
-                            if (data === 'ok')
-                                Swal.fire({
-                                    title: 'ΕΠΙΤΥΧΙΑ',
-                                    text: 'Αποσυνδεθήκατε επιτυχώς!',
-                                    icon: 'success'
-                                }).then(function () {
-                                    const str = window.location.pathname;
-                                    if (str.endsWith("UpdateProfile.php")) window.location = "./";
-                                    else {
-                                        document.getElementById("navbarDropdownU").innerHTML = "";
-                                        document.getElementById("login").style.display = "block";
-                                        document.getElementById("signUp").style.display = "block";
-                                        document.getElementById("signedIn").style.display = "none";
-                                    }
-                                });
-                            else if (data !== 'ok')
-                                Swal.fire({
-                                    title: 'ΣΦΑΛΜΑ',
+                          if(data === 'ok')
+                              Swal.fire({
+                                  title: 'ΕΠΙΤΥΧΙΑ',
+                                  text: 'Αποσυνδεθήκατε επιτυχώς!',
+                                  icon: 'success'
+                              }).then(function() {
+                                  const str=window.location.pathname;
+                                  if(str.endsWith("UpdateProfile.php")) window.location="./";
+                                  else {
+                                    document.getElementById("navbarDropdownU").innerHTML="";
+                                    document.getElementById("login").style.display = "block";
+                                    document.getElementById("signUp").style.display = "block";
+                                    document.getElementById("signedIn").style.display = "none";
+                                  }
+                              });
+                          else if (data !== 'ok')
+                            Swal.fire({
+                                title: 'ΣΦΑΛΜΑ',
                                 text: data,
                                 icon: 'error'
                           });
@@ -183,12 +232,17 @@ if(isset($_SESSION['login'])){
                             })
                         },
                     });
+
+
         });
     });
 </script>
 <script type="text/javascript">
     $(function () {
         $('#signIn').click(function (e) {
+
+
+
             const valid = this.form.checkValidity();
             if(valid){
                 e.preventDefault();
@@ -235,14 +289,19 @@ if(isset($_SESSION['login'])){
                     text: 'Παρακαλώ συμπληρώστε όλα τα στοιχεία σας.'
                 });
             }
+
+
         });
     });
 </script>
 <script type="text/javascript">
     $(function () {
         $('#register').click(function (e) {
+
+
             const valid = this.form.checkValidity();
             if(valid){
+
                 e.preventDefault();
                 const firstName = $('#firstnameR').val();
                 const lastname = $('#lastnameR').val();
@@ -251,12 +310,12 @@ if(isset($_SESSION['login'])){
                 const username = $('#usernameR').val();
                 const password = $('#passwordR').val();
                 const repassword = $('#repasswordR').val();
-                console.log(email);
                 if(password!==repassword)
                     Swal.fire({
                         text: 'Ο κωδικός χρήστη δεν είναι ίδιος με τον κωδικό επαλήθευσης.'
                     });
                 else {
+
                     $.ajax({
                         type: 'POST',
                         url: 'register_process.php',
@@ -267,16 +326,16 @@ if(isset($_SESSION['login'])){
                             phone: phone,
                             username: username,
                             password: password,
-                            register: true
+                            register:true
                         },
                         success: async function (data) {
-                            if (data === 'ok')
+                            if(data === 'ok')
                                 Swal.fire({
                                     title: 'ΕΠΙΤΥΧΙΑ',
                                     text: 'Η εγγραφή σας ολοκληρώθηκε.',
                                     icon: 'success'
-                                }).then(function () {
-                                    document.getElementById("navbarDropdownU").innerHTML = username;
+                                }).then(function() {
+                                    document.getElementById("navbarDropdownU").innerHTML=username;
                                     document.getElementById("login").style.display = "none";
                                     document.getElementById("signUp").style.display = "none";
                                     document.getElementById("signedIn").style.display = "block";
@@ -285,7 +344,7 @@ if(isset($_SESSION['login'])){
                             else if (data !== 'ok')
                                 Swal.fire({
                                     title: 'ΣΦΑΛΜΑ',
-                                    text: data, //edw eixa data
+                                    text: data,
                                     icon: 'error'
                                 });
                         },
@@ -298,20 +357,21 @@ if(isset($_SESSION['login'])){
                         },
                     });
                 }
-            } else {
+            }else{
                 Swal.fire({
                     text: 'Παρακαλώ συμπληρώστε όλα τα στοιχεία της φόρμας.'
                 });
             }
+
+
         });
     });
 </script>
 <script type="text/javascript">
-    const str = "<?php echo $showUsername ?>"; //allagh
-    if (str !== "") { //allagh
-        document.getElementById("login").style.display = "none";
-        document.getElementById("signUp").style.display = "none";
-        document.getElementById("signedIn").style.display = "block";
+    const str="<?php echo $showUsername ?>";
+    if(str!="") {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("signUp").style.display = "none";
+      document.getElementById("signedIn").style.display = "block";
     }
 </script>
-

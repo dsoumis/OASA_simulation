@@ -6,23 +6,24 @@
     <title>User Update</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+  background-size: cover;background-attachment: fixed;background-size: cover;">
 <?php
 include 'Navbar.php';
 require_once('config.php');
-$username = "";
-$user = ["first_name" => "", "email" => "", "username" => "", "surname" => "", "telephone" => "", "password" => "", "repassword" => "",];
-if (isset($_SESSION['login'])) {
-    if ($_SESSION['login'] == True) {
-        $username = $_SESSION['username'];
-        $sql = "SELECT * FROM users WHERE username=?";
-        $query = $db->prepare($sql);
-        $query->execute([$username]);
-        $user = $query->fetch();
-    }
+$username="";
+$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>"","repassword"=>"",];
+if(isset($_SESSION['login'])){
+  if($_SESSION['login']==True){
+    $username=$_SESSION['username'];
+    $sql = "SELECT * FROM users WHERE username=?";
+    $query = $db->prepare($sql);
+    $query->execute([$username]);
+    $user = $query->fetch();
+  }
 }
 ?>
-<div>
+<div >
     <form>
         <div class="container">
             <div class="row">
@@ -61,8 +62,10 @@ if (isset($_SESSION['login'])) {
 <script src="js/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
-    const str1 = "<?php echo $username?>";
-    if (str1 === "") window.location = "./";
+
+  const str1="<?php echo $username?>";
+  if(str1==="") window.location="./";
+
 </script>
 <script type="text/javascript">
     $(function () {
@@ -94,7 +97,7 @@ if (isset($_SESSION['login'])) {
                             username: username,
                             password: password,
                             prev_username: prev_username,
-                            update: true
+                            update:true
                         },
                         success: async function (data) {
                             if (data === 'ok')
