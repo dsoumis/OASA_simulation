@@ -6,7 +6,8 @@
     <title>User Update</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+  background-size: cover;background-attachment: fixed;background-size: cover;">
 <?php
 include 'Navbar.php';
 require_once('config.php');
@@ -22,7 +23,7 @@ if(isset($_SESSION['login'])){
   }
 }
 ?>
-<div>
+<div >
     <form>
         <div class="container">
             <div class="row">

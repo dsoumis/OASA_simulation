@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/routes.css">
 </head>
-<body onload="initialize()">
+<body style="background-image: url('assets/images.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+  background-size: cover;background-attachment: fixed;background-size: cover;" onload="initialize()">
   <?php
       include 'Navbar.php'
   ?>
@@ -62,12 +63,13 @@ function infoOpen(e){
     const n2=url.lastIndexOf("?");
     const n3=url.lastIndexOf("=")+1;
     const str2=url.substring(n3);
+    console.log(e.target);
     if(str2==="ΣΤΑΣΗ") {
       document.getElementById('title').innerHTML=("Αλληλουχία στάσεων για το λεωφορείο : "+e.target.name);
       type="ΛΕΩΦΟΡΕΙΟ";
     }
     else {
-      document.getElementById('title').innerHTML=("Λεωφορεία που περνάνε από την στάση : "+e.target.name);
+      document.getElementById('title').innerHTML=("Λεωφορεία που περνάνε από την στάση : "+e.target.innerHTML);
       type="ΣΤΑΣΗ";
     }
     $.ajax({
@@ -89,9 +91,16 @@ function infoOpen(e){
           t.appendChild(a);
           for(i=0; i<data.length; i++) {
             const b=document.createElement("a");
-            b.setAttribute("href","/routes.php?search="+data[i][0]+"?type="+str2);
+
             b.setAttribute("class","list-group-item list-group-item-action list-group-item-info");
-            textnode=document.createTextNode(data[i][0]);
+            if(data[i]["amea"]==="1") {
+              textnode=document.createTextNode(data[i][0]+"(Α)");
+              b.setAttribute("href","/routes.php?search="+data[i][0]+"(Α)?type="+str2);
+            }
+            else {
+              textnode=document.createTextNode(data[i][0]);
+              b.setAttribute("href","/routes.php?search="+data[i][0]+"?type="+str2);
+            }
             b.appendChild(textnode);
             a.appendChild(b);
           }
@@ -136,8 +145,8 @@ function initialize(){
         const tS = document.getElementById('resultsS');
         for(i=0; i<data.length; i++) {
           const a=document.createElement("option");
-          a.setAttribute("value",data[i][0]);
-
+          if(data[i]["amea"]==="1") a.setAttribute("value",data[i][0]+"(Α)");
+          else a.setAttribute("value",data[i][0]);
           if(data[i]["bus_id"]===undefined) {
             a.setAttribute("id","stop"+i);
             a.setAttribute("name","stop");
@@ -174,7 +183,12 @@ function initialize(){
     a.appendChild(textnode);
     t.appendChild(a);
   }
+
   else if(n1!==0 && str2!=="undefined"){
+    if(str2==="ΣΤΑΣΗ" && str1.endsWith("(Α)")){
+      const n=str1.lastIndexOf("(Α)");
+      str1=str1.slice(0,n);
+    }
     $.ajax({
         type: 'POST',
         url: 'searchSpecific.php',
@@ -202,7 +216,8 @@ function initialize(){
             b.setAttribute("data-toggle", "modal");
             b.setAttribute("data-target", "#infoModal");
             b.setAttribute("class","list-group-item list-group-item-action list-group-item-info");
-            textnode=document.createTextNode(data[i][0]);
+            if(data[i]["amea"]==="1") textnode=document.createTextNode(data[i][0]+"(Α)");
+            else textnode=document.createTextNode(data[i][0]);
             b.appendChild(textnode);
             a.appendChild(b);
           }

@@ -143,7 +143,11 @@ if(isset($_SESSION['login'])){
 </div>
 <script>
 function searchR() {
-  const value = $('#value').val();
+  var value = $('#value').val();
+  if(value.endsWith("(Α)")){
+    const n=value.lastIndexOf("(Α)");
+    value=value.slice(0,n);
+  }
   $.ajax({
       type: 'POST',
       url: 'search.php',
@@ -159,8 +163,9 @@ function searchR() {
         }
         for(i=0; i<data.length; i++) {
           const a=document.createElement("option");
-          a.setAttribute("value",data[i][0]);
           a.setAttribute("id",i);
+          if(data[i]["amea"]==="1") a.setAttribute("value",data[i][0]+"(Α)");
+          else a.setAttribute("value",data[i][0]);
           if(data[i]["bus_id"]===undefined) a.setAttribute("name","ΣΤΑΣΗ");
           else a.setAttribute("name","ΛΕΩΦΟΡΕΙΟ");
           t.appendChild(a);
@@ -182,6 +187,7 @@ function searchR() {
               e.preventDefault();
               const value = $('#value').val();
               const name = $("#0").attr("name");
+
               window.location="./routes.php?search="+value+"?type="+name;
         });
     });

@@ -13,7 +13,7 @@
         $r1=[];
         if(isset($_POST["searchR"]) || isset($_POST["searchB"]))$r1=$query->fetchAll();
         else $r1=[];
-        $sql = "SELECT  bus_stop FROM bus_stops WHERE bus_stop LIKE ?";
+        $sql = "SELECT  bus_stop,amea FROM bus_stops WHERE bus_stop LIKE ?";
         $query = $db->prepare($sql);
         $query->execute([$str]);
         $count=$query->rowCount();
