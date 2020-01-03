@@ -2,7 +2,6 @@
     require_once('config.php');
 ?>
 <?php
-    $previous="index.php";
     if(isset($_POST["register"])) {
         session_start();
         $firstname = $_POST['firstname'];
