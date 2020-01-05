@@ -8,7 +8,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
+  background-size: cover;background-attachment: fixed;background-size: cover;">
 
 <?php
 include 'Navbar.php';

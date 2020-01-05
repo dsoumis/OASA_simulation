@@ -33,17 +33,19 @@ if(isset($_SESSION['login'])){
                     <a class="dropdown-item" href="BuyTickets.php">Αγορά/Φόρτιση Εισιτηρίων</a>
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">Διαδρομές</a></li>
-            <li class="nav-item"><a class="nav-link" href="./routes.php">Δρομολόγια</a></li>
+            <li class="nav-item"><a class="nav-link" href="directions.php">Διαδρομές</a></li>
+            <li class="nav-item"><a class="nav-link" href="routes.php">Δρομολόγια</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Εργασία</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Παράπονα</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Α.Μ.Ε.Α</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Επικοινωνία</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Βοήθεια</a></li>
         </ul>
-        <form  class="form-inline my-2 my-lg-0 navbar-nav mr-auto" autocomplete="off" method="post">
-            <input onkeyup="searchR()" list="results" class="form-control mr-sm-2" name="value" type="text" id="value" placeholder="Αναζήτηση" aria-label="Αναζήτηση">
-            <button id="search" class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo" style="width:18px;"></button>
+        <form class="form-inline my-2 my-lg-0 navbar-nav mr-auto" autocomplete="off" method="post">
+            <input onkeyup="searchR()" list="results" class="form-control mr-sm-2" name="value" type="text" id="value"
+                   placeholder="Αναζήτηση" aria-label="Αναζήτηση">
+            <button id="search" class="btn btn-light" type="submit"><img src="assets/search_icon.png" alt="Logo"
+                                                                         style="width:18px;"></button>
             <datalist id="results">
             </datalist>
         </form>
