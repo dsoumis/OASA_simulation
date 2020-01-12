@@ -14,7 +14,7 @@
             crossorigin=""></script>
     <style>
         #myDIV {
-            width: 100%;
+            width: 50%;
             padding: 50px 0;
             text-align: center;
             background-color: #fbfffd;
@@ -24,15 +24,42 @@
         #mapid {
             height: 180px;
         }
+        rav  {
+            color :black;
+            background-color:rgba(204, 229, 255, 0.5);
+            position: absolute ;
+            width: 300px;
+            height: auto;
+            left: 460px;
+            top: 155px;
+            border: 0px solid blue;
+            padding: 25px;
+            margin: 20px;
+        }
+        #OverviewText4 {
+            position: relative;
+        }
+
+        #OverviewText4 img {
+            width: 500px;
+            height: 350px;
+            position: absolute;
+            top: 50px;
+            right: 50px;
+        }
     </style>
 </head>
-<body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
-  background-size: cover;background-attachment: fixed;background-size: cover;">
+<body style="background-image: url('assets/mehe.jpg');background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;">
 <?php
 include 'Navbar.php'
 ?>
+<div id="OverviewText4">
+    <img src="assets/mpa.jpg" />
+</div>
 <div id="mySidepanel" class="sidepanel">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="background-color: #fd1811">&times;</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="card-header" style="background-color: #7bcafd;">
         Αναζήτηση διαδρομής
     </div>
@@ -61,7 +88,15 @@ include 'Navbar.php'
 </div>
 <button class="openbtn" onclick="openNav()">&#9776;</button>
 
-<div id="myDIV" class="container" style="display: none">
+<rav id="info"><h5>Καλωσήρθατε στη κεντρική ιστοσελίδα του ΟΑΣΑ.</h5><br>
+        <h6>
+    Το αύριο είναι τώρα. Στην ιστοσελίδα μας μπορειτε εύκολα και 
+    γρήγορα να βρείτε κάθε διαδρομή που σας ενδιαφέρει για τη 
+    μετακίνηση στη πόλη μας. <br><br>
+    Πλέον μπορείτε να συνδεθείτε στην ιστοσελίδα μας και να μας ακολουθήσετε στο Facebook. Μη χάσετε κανένα νέο.
+    </h6></rav>
+
+<div id="myDIV" class="container" style="border-radius: 50px 20px;display: none">
     <ul id="busCombination" class="list-group">
     </ul>
     <p id="ticketPrice"></p>
@@ -84,6 +119,10 @@ include 'Navbar.php'
             },
             success: async function (data) {
                 data = JSON.parse(data);
+                const t = document.getElementById('busCombination');
+                while (t.firstChild) {
+                    t.removeChild(t.firstChild);
+                }
                 for (let i = 0; i < data.length - 1; i += 2) {
                     if (i === 0)
                         $("#busCombination").append('<li class="list-group-item list-group-item-action" data-toggle="list" role="tab">' +
