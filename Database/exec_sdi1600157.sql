@@ -1,0 +1,18 @@
+INSERT INTO sdi1600157.buses VALUES("5");
+INSERT INTO sdi1600157.buses VALUES("1");
+INSERT INTO sdi1600157.buses VALUES("4");
+INSERT INTO sdi1600157.bus_stops VALUES("1Η ΚΑΤΣΩΝΗ",0,"Ιλιον");
+INSERT INTO sdi1600157.bus_stops VALUES("15Η ΡΕΦΤΑΣ",1,"Ιλιον");
+INSERT INTO sdi1600157.bus_stops VALUES("3Η ΑΓ.ΝΙΚΟΛΑΟΥ",0,"Ηλιούπολη");
+INSERT INTO sdi1600157.bus_stops VALUES("ΚΑΤΕΧΑΚΗ",1,"Ηλιούπολη");
+INSERT INTO sdi1600157.bus_stops VALUES("ΣΚΡΑ",1,"Ηλιούπολη");
+INSERT INTO sdi1600157.buses_stops VALUES("15Η ΡΕΦΤΑΣ",4);
+INSERT INTO sdi1600157.buses_stops VALUES("3Η ΑΓ.ΝΙΚΟΛΑΟΥ",1);
+INSERT INTO sdi1600157.buses_stops VALUES("ΚΑΤΕΧΑΚΗ",4);
+INSERT INTO sdi1600157.buses_stops VALUES("ΚΑΤΕΧΑΚΗ",5);
+INSERT INTO sdi1600157.buses_stops VALUES("1Η ΚΑΤΣΩΝΗ",4);
+INSERT INTO sdi1600157.buses_stops VALUES("1Η ΚΑΤΣΩΝΗ",1);
+INSERT INTO sdi1600157.buses_stops VALUES("ΣΚΡΑ",1);
+INSERT INTO sdi1600157.buses_stops VALUES("ΣΚΡΑ",4);
+INSERT INTO sdi1600157.buses_stops VALUES("ΣΚΡΑ",5);
+INSERT INTO sdi1600157.users  VALUES("adam.mah","adam98","adam.mah.98@gmail.com","adam","mahjoub","6983221234","foititis");
