@@ -9,13 +9,13 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
-  background-size: cover;background-attachment: fixed;background-size: cover;">
+  background-size: cover;background-attachment: fixed;background-size: cover;" onload="initialize()">
 
 <?php
 include 'Navbar.php';
 require_once('config.php');
 $username = "";
-$user = ["first_name" => "", "email" => "", "username" => "", "surname" => "", "telephone" => "", "password" => "", "repassword" => "",];
+$user = ["first_name" => "", "email" => "", "username" => "", "surname" => "", "telephone" => "", "password" => "", "repassword" => "",'type'=>""];
 if (isset($_SESSION['login'])) {
     if ($_SESSION['login'] == True) {
         $username = $_SESSION['username'];
@@ -26,7 +26,33 @@ if (isset($_SESSION['login'])) {
     }
 }
 ?>
-<div class="container register">
+<style>
+a {
+            color: white;
+            text-decoration: underline;
+        }
+        aygo1{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 2%;
+            height: 2%;
+            left: -7%;
+            top:  -22.25%;
+            border: 0px solid blue;
+        }
+        aygo2{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 2%;
+            height:  2%;
+            left: 10%;
+            top: 22%;
+            border: 0px solid blue;
+        }
+</style>
+<div class="container register" style="border-radius: 50px 50px;">
     <div class="row">
         <div class="col-md-3 register-left">
             <img src="assets/bus.png" alt=""/>
@@ -53,10 +79,9 @@ if (isset($_SESSION['login'])) {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select class="form-control" id="selectionHolder" required>
-                                    <option disabled selected hidden>Κατηγορία Δικαιούχου</option>
-                                    <option>Φοιτητής</option>
-                                    <option>Α.Μ.Ε.Α</option>
-                                    <option>Καμία από τις παραπάνω</option>
+                                  <option value="foititis" id="foititis">Φοιτητής</option>
+                                  <option value="amea" id="amea">Α.Μ.Ε.Α</option>
+                                  <option value="regular" id="regular">Κανονικό</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -121,9 +146,6 @@ if (isset($_SESSION['login'])) {
         </div>
     </div>
 </div>
-
-<script src="js/jquery-3.4.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
     $(function () {
         $('#selectionHolder').change(function (e) {
@@ -240,6 +262,13 @@ if (isset($_SESSION['login'])) {
             }
         });
     });
+</script>
+<script>
+function initialize(){
+  var type="<?php echo $user['type']?>";
+  if(type==="") type="regular";
+  document.getElementById(type).selected=true;
+}
 </script>
 </body>
 <style type="text/css">

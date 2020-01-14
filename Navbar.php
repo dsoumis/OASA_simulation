@@ -10,7 +10,7 @@ if(isset($_SESSION['login'])){
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7bcafd;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7bcafd">
     <a class="navbar-brand" href="./"><img src="assets/logo_oasa.png" alt="Logo" style="width:80px;"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@ if(isset($_SESSION['login'])){
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Νέα<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="./">Νέα<span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item dropdown">
@@ -33,13 +33,11 @@ if(isset($_SESSION['login'])){
                     <a class="dropdown-item" href="BuyTickets.php">Αγορά/Φόρτιση Εισιτηρίων</a>
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="directions.php">Διαδρομές</a></li>
             <li class="nav-item"><a class="nav-link" href="routes.php">Δρομολόγια</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Εργασία</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Παράπονα</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Α.Μ.Ε.Α</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Επικοινωνία</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Βοήθεια</a></li>
+            <li class="nav-item"><a class="nav-link" href="./">Εργασία</a></li>
+            <li class="nav-item"><a class="nav-link" href="./AMEA.php">Α.Μ.Ε.Α</a></li>
+            <li class="nav-item"><a class="nav-link" href="./">Επικοινωνία</a></li>
+            <li class="nav-item"><a class="nav-link" href="./Plirofories.php">Βοήθεια</a></li>
         </ul>
         <form class="form-inline my-2 my-lg-0 navbar-nav mr-auto" autocomplete="off" method="post">
             <input onkeyup="searchR()" list="results" class="form-control mr-sm-2" name="value" type="text" id="value"
@@ -108,6 +106,14 @@ if(isset($_SESSION['login'])){
                     <label for="phoneR"><b>Τηλέφωνο</b></label>
                     <input type="text" class="form-control" name="phoneR" id="phoneR" required>
                   </div>
+                  <label for="type"><b>Είδος Δικαιούχου</b></label>
+                  <div class="form-group">
+                      <select class="form-control" name="type" id="type" required>
+                          <option value="foititis">Φοιτητής</option>
+                          <option value="amea">Α.Μ.Ε.Α</option>
+                          <option value="regular" selected>Κανονικό</option>
+                      </select>
+                  </div>
               </div>
 
               <div class="modal-footer">
@@ -169,8 +175,9 @@ function searchR() {
           a.setAttribute("id",i);
           if(data[i]["amea"]==="1") a.setAttribute("value",data[i][0]+"(Α)");
           else a.setAttribute("value",data[i][0]);
-          if(data[i]["bus_id"]===undefined) a.setAttribute("name","ΣΤΑΣΗ");
-          else a.setAttribute("name","ΛΕΩΦΟΡΕΙΟ");
+          if(data[i]["bus_id"]===undefined && data[i]["area"]===undefined) a.setAttribute("name","ΣΤΑΣΗ");
+          else if(data[i]["area"]===undefined) a.setAttribute("name","ΛΕΩΦΟΡΕΙΟ");
+          else  a.setAttribute("name","ΠΕΡΙΟΧΗ");
           t.appendChild(a);
         }
       },
@@ -313,6 +320,7 @@ function searchR() {
                 const username = $('#usernameR').val();
                 const password = $('#passwordR').val();
                 const repassword = $('#repasswordR').val();
+                const type = $('#type').val();
                 if(password!==repassword)
                     Swal.fire({
                         text: 'Ο κωδικός χρήστη δεν είναι ίδιος με τον κωδικό επαλήθευσης.'
@@ -329,6 +337,7 @@ function searchR() {
                             phone: phone,
                             username: username,
                             password: password,
+                            type:type,
                             register:true
                         },
                         success: async function (data) {

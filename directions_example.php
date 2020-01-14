@@ -4,14 +4,15 @@ if (isset($_POST["example"])) {
     session_start();
     $start = $_POST['start'];
     $destination = $_POST['destination'];
-    //$sql = "SELECT * FROM users WHERE username=?";
-    if ($start === '15I REFTAS') {
-        $directions = array("4", "3I AG.NIKOLAOU", "5", "1I KATSONI", "2:00");
+    $directions=[];
+    if ($start === '15Η ΡΕΦΤΑΣ') {
+        $directions = array("4", "3Η ΑΓ.ΝΙΚΟΛΑΟΥ", "5", "1Η ΚΑΤΣΩΝΗ", "2:00");
         echo json_encode($directions);
-    } elseif ($start === '1I KATSONI') {
-        $directions = array("5", "3I AG.NIKOLAOU", "0:57");
+    } else if ($start === '1Η ΚΑΤΣΩΝΗ') {
+        $directions = array("5", "3Η ΑΓ.ΝΙΚΟΛΑΟΥ", "0:57");
         echo json_encode($directions);
     }
+    else echo json_encode($directions);
 } else {
     echo "No data.";
     header("Location: ./");

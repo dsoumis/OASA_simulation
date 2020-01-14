@@ -11,7 +11,7 @@
         $phone = $_POST['phone'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-
+        $type=$_POST['type'];
         $sql = "SELECT * FROM users WHERE username=?";
         $query = $db->prepare($sql);
         $query->execute([$username]);
@@ -38,9 +38,9 @@
 
 
 
-        $sql = "INSERT INTO users (username, password, email, first_name, surname, telephone) VALUES(?,?,?,?,?,?)";
+        $sql = "INSERT INTO users (username, password, email, first_name, surname, telephone,type) VALUES(?,?,?,?,?,?,?)";
         $statementInsert = $db->prepare($sql);
-        $result = $statementInsert->execute([$username, $password, $email, $firstname, $lastname, $phone]);
+        $result = $statementInsert->execute([$username, $password, $email, $firstname, $lastname, $phone,$type]);
 
         if ($result) {
             $_SESSION['login']=True;
@@ -57,4 +57,3 @@
 
         header("Location: ./");
     }
-

@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body style="background-image: url('assets/backgroundImage.jpg');background-repeat: no-repeatbackground-attachment: fixed;
-  background-size: cover;background-attachment: fixed;background-size: cover;">
+  background-size: cover;background-attachment: fixed;background-size: cover;" onload="initialize()">
 <?php
 include 'Navbar.php';
 require_once('config.php');
 $username="";
-$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>""];
+$user=["first_name"=>"","email"=>"","username"=>"","surname"=>"","telephone"=>"","password"=>"",'type'=>""];
 if(isset($_SESSION['login'])){
   if($_SESSION['login']==True){
     $username=$_SESSION['username'];
@@ -23,11 +23,41 @@ if(isset($_SESSION['login'])){
   }
 }
 ?>
+<style>
+a {
+            color: white;
+            text-decoration: underline;
+        }
+        aygo1{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 5%;
+            height: 5%;
+            left: 5%;
+            top:  3%;
+            border: 0px solid blue;
+        }
+        aygo2{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 5%;
+            height:  5%;
+            left: 5%;
+            top: 21.1%;
+            border: 0px solid blue;
+        }
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+</style>
+
 <div >
+
     <form>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
+        <div class="container" style="border-radius: 50px 50px;position:absolute;top:25%;left:25%;text-align:center;width:50%;background-color:#7bcafd">
                     <h1>Επεξεργασία Προφίλ</h1>
                     <p>Τροποποιήστε τα στοιχεία σας.</p>
                     <hr class="mb-3">
@@ -42,7 +72,14 @@ if(isset($_SESSION['login'])){
 
                     <label for="phone"><b>Τηλέφωνο</b></label>
                     <input type="text" class="form-control" name="phone" id="phone" value=<?php echo $user['telephone'] ?> required>
-
+                    <label for="type"><b>Είδος Δικαιούχου</b></label>
+                    <div class="form-group">
+                        <select class="form-control" name="type" id="typeR" required>
+                            <option value="foititis" id="foititis">Φοιτητής</option>
+                            <option value="amea" id="amea">Α.Μ.Ε.Α</option>
+                            <option value="regular" id="regular">Κανονικό</option>
+                        </select>
+                    </div>
                     <label for="username"><b>Όνομα Χρήστη</b></label>
                     <input type="text" class="form-control" name="username" id="username" value=<?php echo $user['username'] ?> required>
 
@@ -53,11 +90,11 @@ if(isset($_SESSION['login'])){
                     <input type="password" class="form-control" name="repassword" id="repassword" value=<?php echo $user['password'] ?> required>
                     <hr class="mb-3">
                     <input class="btn btn-primary" type="submit" name="create" id="update" value="Τροποποίηση">
-                </div>
-            </div>
         </div>
     </form>
 </div>
+<aygo2><a  href="./UpdateProfile.php"> Προφίλ </aygo2>
+<aygo1><a  href="./"> Αρχική   </aygo1>
 <script type="text/javascript">
 
   const str1="<?php echo $username?>";
@@ -78,6 +115,7 @@ if(isset($_SESSION['login'])){
                 const username = $('#username').val();
                 const password = $('#password').val();
                 const repassword = $('#repassword').val();
+                const type=$('#typeR').val();
                 if(password!==repassword)
                     Swal.fire({
                         text: 'Ο κωδικός χρήστη δεν είναι ίδιος με τον κωδικό επαλήθευσης.'
@@ -94,6 +132,7 @@ if(isset($_SESSION['login'])){
                             username: username,
                             password: password,
                             prev_username: prev_username,
+                            type:type,
                             update:true
                         },
                         success: async function (data) {
@@ -128,6 +167,13 @@ if(isset($_SESSION['login'])){
             }
         });
     });
+</script>
+<script>
+function initialize(){
+  var type="<?php echo $user['type']?>";
+  if(type==="") type="regular";
+  document.getElementById(type).selected=true;
+}
 </script>
 </body>
 </html>

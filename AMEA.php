@@ -6,7 +6,7 @@
     <title>ΟΑΣΑ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/routes.css">
+    <link rel="stylesheet" type="text/css" href="css/sidepanel.css">
 </head>
 
 
@@ -28,9 +28,9 @@ rav  {
   color :black;
   background-color:rgba(204, 229, 255, 0.5);
   position: absolute ;
-  width: 420px;
-  height: 350px;
-  left: 460px;
+  width: 30%;
+  height: 360px;
+  left: 28%;
   top: 155px;
   border: 0px solid blue;
   padding: 25px;
@@ -40,37 +40,33 @@ a {
             color: white;
             text-decoration: underline;
         }
-aygo1{
-    color : white;
-    background-color: transparent !important;
-    position: absolute ;
-    width: 10px;
-    height: 10px;
-    left: -5px;
-    top: 56px;
-    border: 0px solid blue;
-    padding: 50px;
-    margin: 20px;
-}
-aygo2{
-    color : white;
-    background-color: transparent !important;
-    position: absolute ;
-    width: 10px;
-    height:  10px;
-    left: 70px;
-    top: 56px;
-    border: 0px solid blue;
-    padding: 50px;
-    margin: 20px;
-}
+        aygo1{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 2%;
+            height: 2%;
+            left: 5%;
+            top:  3%;
+            border: 0px solid blue;
+        }
+        aygo2{
+            color : white;
+            background-color: transparent !important;
+            position: absolute ;
+            width: 2%;
+            height:  2%;
+            left: 10%;
+            top: 23.7%;
+            border: 0px solid blue;
+        }
 #OverviewText4 {
     position: relative;
 }
 
 #OverviewText4 img {
-    width: 400px;
-    height: 350px;
+    width: 30%;
+    height: 360px;
     position: absolute;
     top: 0px;
     right: 50px;
@@ -105,7 +101,9 @@ aygo2{
 </style>
 
 
-
+<button class="openbtn" onclick="openNav()">&#9776;</button>
+<aygo2><a  href="./AMEA.php"> ΑΜΕΑ </aygo2>
+<aygo1><a  href="./"> Αρχική   </aygo1>
 <div id="mySidepanel" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="card">
@@ -126,19 +124,19 @@ aygo2{
 </div>
 </div>
 </div>
-<button class="openbtn" onclick="openNav()">&#9776;</button>
+
 <div id="OverviewText4">
     <img src="assets/AMEA.png" />
 </div>
 
-<aygo1><a href="./"> Αρχική </a> </aygo1>
-<aygo2> <a href="./AMEA.php"> Α.Μ.Ε.Α.</a></aygo2>
+
 <rav id="info">Το πρόβλημα της μετακίνησης-μεταφοράς των εμποδιζομένων ατόμων στις σύγχρονες πόλεις
      παραμένει έντονο με αρνητικές συνέπειες στην ποιότητα ζωής λόγω της μη ικανοποιητικής
      πρόσβασης στα ΜΜΜ.<br>Για αυτόν το λόγο προσπαθούμε με κάθε δυνατό τρόπο να δώσουμε
     λύσεις στα προβλήματα των συνανθρώπων μας.<br>
     Σε αυτή τη σελίδα μπορείτε να βρείτε εύκολα τις κατάλληλα διαμορφωμένες στάσεις στη
     περιοχή που σας ενδιαφέρει καθώς και τα λεωφορεία που εξυπηρετούν.</rav>
+
 
 
 </script>

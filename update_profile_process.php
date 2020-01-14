@@ -11,13 +11,11 @@ if(isset($_POST['update'])) {
     $phone = $_POST['phone'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+    $type=$_POST['type'];
     $prev_username = $_POST['prev_username'];
-
-    $sql = "UPDATE users SET username=?, password=?, email=?, first_name=?, surname=?, telephone=? WHERE username=?";
+    $sql = "UPDATE users SET username=?, password=?, email=?, first_name=?, surname=?, telephone=?,type=? WHERE username=?";
     $statementInsert = $db->prepare($sql);
-    $result = $statementInsert->execute([$username, $password, $email, $firstname, $lastname, $phone, $prev_username]);
-
+    $result = $statementInsert->execute([$username, $password, $email, $firstname, $lastname, $phone,$type, $prev_username]);
     if ($result) {
         echo "ok";
     } else {
